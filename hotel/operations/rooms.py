@@ -27,6 +27,11 @@ def update_room(room_id: int, data: UpdateRoomData, room_interface: DataInterfac
     room_data = data.dict()
     return room_interface.update(room_id, room_data)
 
+def create_room(room_data: CreateRoomData, room_interface: DataInterface):
+    room_data_dict = room_data.dict()
+    return room_interface.create(room_data_dict)
+
+
 def read_availability_by_room_and_date(room_id: int, res_date: str, booking_interface: DataInterface):
     
     # get parts list [year, month, day] of date to search for it's availability

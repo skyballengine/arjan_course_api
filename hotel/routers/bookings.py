@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from hotel.db.models import DBBooking, DBRoom
-from hotel.operations.bookings import CreateBookingData, ReadRoomAvailabilityByDateRange, UpdateBookingData, read_availability_by_date_range, update_booking, create_booking, delete_booking, delete_all_bookings, read_all_bookings, read_booking, delete_booking
+from hotel.operations.bookings_copy import CreateBookingData, ReadRoomAvailabilityByDateRange, UpdateBookingData, read_availability_by_date_range, update_booking, create_booking, delete_booking, delete_all_bookings, read_all_bookings, read_booking, delete_booking
 from hotel.db.db_interface import DataObject, DBInterface
 router = APIRouter()
 

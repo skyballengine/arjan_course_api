@@ -2,7 +2,7 @@ from datetime import datetime
 from fastapi import APIRouter
 from hotel.db.db_interface import DBInterface
 from hotel.db.models import DBBooking, DBRoom
-from hotel.operations.rooms_copy import UpdateRoomData, read_all_rooms, read_availability_by_room_and_date, read_room, update_room
+from hotel.operations.rooms_copy import CreateRoomData, UpdateRoomData, read_all_rooms, read_availability_by_room_and_date, read_room, update_room, create_room
 router = APIRouter()
 
 @router.get("/rooms")
@@ -24,3 +24,8 @@ def api_update_room(room_id: int, data: UpdateRoomData):
 def api_check_room_availability_by_room_and_date(room_id: int, res_date: str):
     booking_interface = DBInterface(DBBooking)
     return read_availability_by_room_and_date(room_id, res_date, booking_interface)
+
+@router.post("/createroom")
+def api_create_room(data: CreateRoomData):
+    room_interface = DBInterface(DBRoom)
+    return create_room(data, room_interface)
