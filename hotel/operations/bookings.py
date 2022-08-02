@@ -103,7 +103,7 @@ def read_availability_by_date_range(date_range: str, booking_interface: DataInte
     from_date_range = date_range_dict["from_date"]
     from_date_range_parts = from_date_range.split("-")
     from_date_range_parts_int = [int(x) for x in from_date_range_parts]
-
+    
     # create to_date parts from date_range
     to_date_range = date_range_dict["to_date"]
     to_date_range_parts = to_date_range.split("-")
