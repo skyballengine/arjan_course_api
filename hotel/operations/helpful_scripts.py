@@ -37,7 +37,7 @@ def date_range_chop(booking_or_date_string: str or dict) -> tuple[list]:
 
 # pass in a single booking
 def create_booking_dates_dict(booking: DataObject):
-
+    print("create_booking_dates_dict function.....")
     # need a month to number of days dictionary
     DAYS_BY_MONTH = {"1": 31, "2": 28, "3": 31, "4": 30, "5": 31, "6": 30, "7": 31, "8": 21, "9": 30, "10": 31, "11": 30, "12": 31}
 
@@ -63,7 +63,7 @@ def create_booking_dates_dict(booking: DataObject):
         else:
             booking_months_to_days_dict.update({month_list[i]: [i for i in range(1, DAYS_BY_MONTH.get(month_list[i]) + 1)]})
 
-
+    # print(booking_months_to_days_dict)
     return booking_months_to_days_dict
 
 def search_years_and_months_ranges(bookings_data, date_range):
@@ -78,31 +78,32 @@ def search_years_and_months_ranges(bookings_data, date_range):
     # create from_date parts from date_range
     from_date_range = date_range_dict["from_date"]
     from_date_range_parts_int = [int(x) for x in single_date_chop(from_date_range)]
-    print(from_date_range_parts_int)
+    # print(from_date_range_parts_int)
+    
     # create to_date parts from date_range
     to_date_range = date_range_dict["to_date"]
     to_date_range_parts_int = [int(y) for y in single_date_chop(to_date_range)]
-    print(to_date_range_parts_int)
+    # print(to_date_range_parts_int)
     
     for booking in bookings_data:
         from_date_parts, to_date_parts = date_range_chop(booking)
         booking_from_date_parts_int = [int(i) for i in from_date_parts]
         booking_to_date_parts_int = [int(i) for i in to_date_parts]
-        print(booking_from_date_parts_int, booking_to_date_parts_int)
+        # print(booking_from_date_parts_int, booking_to_date_parts_int)
         # using range we can see if the SEARCH year, month, and day range are within the BOOKING year, month, and day ranges
 
         search_year_range = [i for i in range(from_date_range_parts_int[0], to_date_range_parts_int[0] + 1)]
         booking_year_range = [j for j in range(booking_from_date_parts_int[0], booking_to_date_parts_int[0] + 1)]
-        print(search_year_range)
-        print(booking_year_range)
+        # print(search_year_range)
+        # print(booking_year_range)
         
         search_month_range = [i for i in range(from_date_range_parts_int[1], to_date_range_parts_int[1] + 1)]
         booking_month_range = [i for i in range(booking_from_date_parts_int[1], booking_to_date_parts_int[1] + 1)]
-        print(search_month_range)
-        print(booking_month_range)
+        # print(search_month_range)
+        # print(booking_month_range)
 
         day_range = set(range(booking_from_date_parts_int[2], booking_to_date_parts_int[2] + 1)).intersection(set(range(from_date_range_parts_int[2], to_date_range_parts_int[2] + 1)))
-        print(day_range)
+        # print(day_range)
 
         if len(set(search_year_range).intersection(set(booking_year_range))) >= 1:
             if len(set(search_month_range).intersection(set(booking_month_range))) >= 1:

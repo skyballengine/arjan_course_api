@@ -1,6 +1,8 @@
 from typing import Any, Protocol
 from hotel.db.models import Base, to_dict
 from hotel.db.engine import DBSession
+from datetime import date, datetime
+
 
 DataObject = dict[str, Any]
 
@@ -29,10 +31,13 @@ class DBInterface:
     def update(self, id: int, data: DataObject):
         session = DBSession()
         result = session.query(self.db_class).get(id)
+        print(to_dict(result))
         for key, value in data.items():
-            if value != None:
-                setattr(result, key, value)
+            # if value != None and value != 0 and value != str(datetime.now()).split(" ")[0]:
+            setattr(result, key, value)
+        
         session.commit()
+        print(to_dict(result))
         return to_dict(result)
     
     def delete_all(self) -> DataObject:

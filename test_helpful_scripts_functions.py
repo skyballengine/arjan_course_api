@@ -11,19 +11,19 @@ from test_interface import BookingInterface, RoomInterface
 
 class TestHelpfulScriptsFunctions(unittest.TestCase):
     
-    def test_single_date_chop(self):
+    def test_single_date_chop(self) -> None:
         post_date = single_date_chop("2023-04-07")
         assert post_date[0] == "2023"
         assert post_date[1] == "4"
         assert post_date[2] == "7"
 
-    def test_date_range_chop_with_string(self):
+    def test_date_range_chop_with_string(self) -> None:
         from_dates, to_dates = date_range_chop("2024-05-06 - 2024-07-01")
         assert from_dates == ["2024", "5", "6"]
         assert to_dates == ["2024", "7", "1"]
     
 
-    def test_date_range_chop_with_booking(self):
+    def test_date_range_chop_with_booking(self) -> None:
         booking_interface = BookingInterface()
         bookings_data = booking_interface.read_all()
         booking = bookings_data[0]
@@ -31,7 +31,7 @@ class TestHelpfulScriptsFunctions(unittest.TestCase):
         assert post_dates[0] == ["2023", "12", "24"]
         assert post_dates[1] == ["2023", "12", "25"]
 
-    def test_create_booking_dates_dict(self):
+    def test_create_booking_dates_dict(self) -> None:
         booking_interface = BookingInterface()
         bookings_data = booking_interface.read_all()
         print(bookings_data)

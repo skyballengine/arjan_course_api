@@ -1,8 +1,9 @@
 import unittest
-from hotel.operations.bookings_copy import CreateBookingData, InvalidDateError, create_booking
+from hotel.operations.bookings import CreateBookingData, InvalidDateError, create_booking
 from hotel.operations.customers import CreateCustomerData
 from hotel.operations.interface import DataObject
-from hotel.operations.rooms_copy import CreateRoomData
+from hotel.operations.rooms import CreateRoomData
+from datetime import datetime, date
 
 class DataInterfaceStub:
     def read_by_id(self, id: int) -> DataObject:
@@ -26,9 +27,24 @@ class RoomInterface(DataInterfaceStub):
         for room in room_data:
             if room["id"] == id:
                 return room
+
+    def create(self, data: DataObject) -> list[dict]:
+        all_rooms = self.read_all()
+        all_rooms.append(data)
+        return all_rooms
+
+    def update(self, id: int, data: DataObject) -> list[dict]:
+        result = [customer for customer in self.read_all() if customer["id"] == id][0]
+        print(f"Before update: {result}")
+        for key, value in data.items():
+            if key in result.keys():
+                result.update({key: value})
+        
+        print(f"After update: {result}")
+        return result
     
     # create mock rooms
-    def read_all(self):
+    def read_all(self) -> list[dict]:
         
         room_1 = CreateRoomData(
             number="10",
@@ -67,12 +83,12 @@ class RoomInterface(DataInterfaceStub):
 class BookingInterface(DataInterfaceStub):
     def create(self, data: DataObject):
         booking_data = dict(data)
-        booking_data["id"] = 1
+        booking_data["id"] = len(self.read_all()) + 1
         print(booking_data)
         return booking_data
 
-    # create some mock bookings
-    def read_all(self):
+    # create mock bookings
+    def read_all(self) -> list[dict]:
         bookings_list = []
         booking_1 = CreateBookingData(
             room_id=1,
@@ -113,8 +129,36 @@ class BookingInterface(DataInterfaceStub):
         return bookings_list
 
 class CustomerInterface(DataInterfaceStub):
+    def create(self, customer_data: DataObject) -> DataObject:
+        customer_data["id"] = len(self.read_all()) + 1
+        print(customer_data)
+        return customer_data
+
+    def update(self, id: int, data: DataObject) -> list[dict]:
+        result = [customer for customer in self.read_all() if customer["id"] == id][0]
+        print(f"Before update: {result}")
+        for key, value in data.items():
+            if key in result.keys():
+                result.update({key: value})
+        
+        print(f"After update: {result}")
+        return result
+
+    def delete(self, id: int) -> list[dict]:
+        results = self.read_all()
+        print(f"Before deletion of customer {id}: {results}")
+        for customer in results:
+            if customer["id"] == id:
+                deleted_customer = customer
+                results.remove(customer)
+        print(f"The customer: {deleted_customer} was deleted from the list.") 
+        return results
+        
+
+
+
     # create mock customers
-    def read_all(self):
+    def read_all(self) -> list[dict]:
         customer_1 = CreateCustomerData(
             first_name="Bobby",
             last_name="Sinclair",
@@ -137,7 +181,14 @@ class CustomerInterface(DataInterfaceStub):
             market_to=True,
         )
         customer_list = []
-        customer_list.append(customer_1)
-        customer_list.append(customer_2)
-        customer_list.append(customer_3)
+        customer_list.append(dict(customer_1))
+        customer_list.append(dict(customer_2))
+        customer_list.append(dict(customer_3))
+
+        new_id = 1 
+        for customer in customer_list:
+            customer.update(id=new_id)
+            new_id += 1
+
+
         return customer_list

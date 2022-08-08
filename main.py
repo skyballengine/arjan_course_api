@@ -14,7 +14,7 @@ def startup_event():
 
 @app.get("/")
 def read_root():
-    return "Hey there, this is the GOAT api and the server is up and running"
+    return "Hey there, this is the GOAT api and the server is up and running!!"
 
 app.include_router(rooms.router)
 app.include_router(customers.router)
