@@ -5,6 +5,8 @@
 
 FUNCTIONALITY ADDED:
 
+
+
 /hotel/db
 
 edit_db.py 
@@ -23,7 +25,9 @@ bookings.py
     - created read_availability_by_date_range function to get the room numbers and ids of available rooms and get a list of rooms that are unavailable
 
 
-rooms.py -
+rooms.py 
+    
+    - created the read_availability_by_room_and_date function and added to the room router to check for the availability of a room based on a single date.
 
 
 helpful_scripts.py
@@ -41,20 +45,25 @@ helpful_scripts.py
 ./
 
 test_interface.py
+
     - added RoomInterface, BookingInterface, and CustomerInterface to be used during testing as subclasses of the DataInterfaceStub abstract base class, at least that's what it seemed to be but it doesn't itself inherit from the ABC class. Added mock data to the read_all methods and used that for the testing of each class.
 
 
 test_bookings.py
+
     - added several tests 
 
 
 test_customers.py -
+
     - added several tests
 
 
-test_rooms -
+test_rooms
+
     - added several tests
 
 
-test_helpful_scripts -
+test_helpful_scripts
+
     - added several tests
